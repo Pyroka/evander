@@ -10,7 +10,7 @@ Dir.chdir("./source/blog/") do
         if(File.exist?("index.markdown"))
           in_config = false
           File.open("index.markdown", "r").each_line do |line|
-            if(line.start_with?("-"))
+            if(line.start_with?("---"))
               in_config = !in_config
               next
             end

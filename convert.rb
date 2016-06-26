@@ -21,7 +21,8 @@ Dir.chdir("./source/blog/") do
             end
           end
         end
-        File.open("config.rb", "w") do |f|
+        File.open("config.yaml", "w") do |f|
+          f.puts("---")
           f.puts(config_lines)
         end
         File.open("index.markdown", "w") do |f|

@@ -1,6 +1,6 @@
 require 'optparse'
 require 'ostruct'
-require 'pp'
+require File::expand_path('./site')
 
 module Evander
 
@@ -33,7 +33,7 @@ module Evander
   end
 
   options = CommandLineOptions.parse(ARGV)
-  pp options
-  pp ARGV
+
+  site = Site.new(options.root_dir)
 
 end

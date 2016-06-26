@@ -3,7 +3,9 @@ module Evander
   class Page
 
     def initialize(path)
-      @sub_pages = Page.get_sub_pages(File.dirname(path))
+      dirname = File.dirname(path)
+      @title = dirname
+      @sub_pages = Page.get_sub_pages(dirname)
     end
 
     def self.get_sub_pages(dirname)

@@ -4,6 +4,12 @@ require 'yaml'
 module Evander
 
   class Page
+    attr_reader :title
+    attr_reader :date
+    attr_reader :categories
+    attr_reader :filename
+    attr_reader :sub_pages
+    attr_reader :markdown
 
     def initialize(path)
       dirname = File.dirname(path)
@@ -11,11 +17,12 @@ module Evander
       @date = DateTime.new
       @categories = []
       _parse_config(dirname)
+      @filename = @title.gsub(':', '-').gsub(' ', '-')
       @sub_pages = Page.get_sub_pages(dirname)
+      @markdown = File.open(path, "r").read
     end
 
     def _parse_config(dirname)
-      puts dirname
       config_path = dirname + "/config.yaml";
       if(File.exist?(config_path))
         config = YAML.load_file(config_path)

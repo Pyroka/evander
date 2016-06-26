@@ -18,18 +18,19 @@ module Evander
         Dir.mkdir(root_dir)
       end
       Dir.chdir(root_dir) do
-        @top_level_pages.each do |name, value|
-          if(value.is_a?(Page))
-            _render_page(value)
+        @top_level_pages.each do |page|
+          if(page.is_a?(Page))
+            _render_page(page)
           end
         end
       end
     end
 
     def _create_convenience_instance_vars
-      @top_level_pages.each do |name, value| 
-        instance_variable_set("@" + name, value)
-        Site.class_eval("attr_accessor :" + name)
+      @top_level_pages.each do |page|
+        if(page.is_a?(Page))
+          instance_variable_set("@" + page.title, page)
+        end
       end
     end
 
@@ -39,7 +40,7 @@ module Evander
       html = @markdown.render(parsed.result(binding))
       File.write(page.filename + ".html", html)
 
-      page.sub_pages.each do |name, subpage|
+      page.sub_pages.each do |subpage|
         if(!File.directory?(page.title))
           Dir.mkdir(page.title)
         end

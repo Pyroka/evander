@@ -39,7 +39,7 @@ module Evander
     end
 
     def self.get_sub_pages(dirname)
-      pages = Hash.new
+      pages = []
       Dir.foreach(dirname) do |child|
         Dir.chdir(dirname) do
           if(child == "." || child == ".." || !File.directory?(child))
@@ -48,9 +48,9 @@ module Evander
 
           index_path = File.join(child, "index.markdown")
           if(File.exist?(index_path))
-            pages[child] = Page.new(index_path)
+            pages << Page.new(index_path)
           else
-            pages[child] = Page.get_sub_pages(child)
+            pages << Page.get_sub_pages(child)
           end
         end
       end

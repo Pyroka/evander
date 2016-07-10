@@ -1,5 +1,6 @@
 require 'date'
 require 'yaml'
+require 'kramdown'
 
 module Evander
 
@@ -22,6 +23,19 @@ module Evander
       @markdown = File.open(path, "r").read
     end
 
+    def create_context(parent_context)
+      @context = parent_context
+      @context.title = @title
+      @context.date = @date
+      @context.categories = @categories
+      @context.filename = @filename
+      @context.sub_pages = @sub_pages
+      @context.markdown = @markdown
+      @sub_pages.each do |page|
+        page.create_context(parent_context)
+      end
+    end
+
     def self.get_sub_pages(dirname)
       pages = []
       Dir.foreach(dirname) do |child|
@@ -39,6 +53,10 @@ module Evander
         end
       end
       pages
+    end
+
+    def render
+      Kramdown::Document.new(@context.render(@markdown), :auto_ids => false).to_html
     end
 
     def _parse_config(dirname)

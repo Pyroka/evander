@@ -22,22 +22,6 @@ module Evander
       @markdown = File.open(path, "r").read
     end
 
-    def _parse_config(dirname)
-      config_path = dirname + "/config.yaml";
-      if(File.exist?(config_path))
-        config = YAML.load_file(config_path)
-        if(config.has_key?("title"))
-          @title = config["title"]
-        end
-        if(config.has_key?("date"))
-          @date = config["date"]
-        end
-        if(config.has_key?("categories"))
-          @categories = config["categories"]
-        end
-      end
-    end
-
     def self.get_sub_pages(dirname)
       pages = []
       Dir.foreach(dirname) do |child|
@@ -55,6 +39,22 @@ module Evander
         end
       end
       pages
+    end
+
+    def _parse_config(dirname)
+      config_path = dirname + "/config.yaml";
+      if(File.exist?(config_path))
+        config = YAML.load_file(config_path)
+        if(config.has_key?("title"))
+          @title = config["title"]
+        end
+        if(config.has_key?("date"))
+          @date = config["date"]
+        end
+        if(config.has_key?("categories"))
+          @categories = config["categories"]
+        end
+      end
     end
 
   end

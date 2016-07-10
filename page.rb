@@ -50,7 +50,7 @@ module Evander
           if(File.exist?(index_path))
             pages << Page.new(index_path)
           else
-            pages << Page.get_sub_pages(child)
+            pages.push(*Page.get_sub_pages(child))
           end
         end
       end

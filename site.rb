@@ -35,7 +35,6 @@ module Evander
     end
 
     def _render_page(page)
-
       parsed = ERB.new(page.markdown)
       html = @markdown.render(parsed.result(binding))
       File.write(page.filename + ".html", html)

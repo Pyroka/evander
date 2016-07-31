@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title><%= title %></title>
+  <meta name="description" content="<%= description %>">
+  <% if !keywords.empty? %>
+    <meta name="keywords" content="<%= keywords.join(", ") %>">
+  <% end %>
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="canonical" href="<%= site.url %>">
+  <link href="<%= root_url %>/favicon.png" rel="icon">
+  <link href="<%= root_url %>/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="<%= site.rss_url %>" rel="alternate" title="<%= site.title %>" type="application/atom+xml">
+</head>
+<body>
+</body>

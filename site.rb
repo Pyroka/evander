@@ -4,7 +4,7 @@ require File::expand_path('./page')
 require File::expand_path('./erb_context')
 
 module Evander
-  
+
   class Site
 
     def initialize(root_dir)
@@ -12,6 +12,7 @@ module Evander
       @root_dir = root_dir
       @top_level_pages = Page.get_sub_pages(root_dir)
       site_context = _create_site_context
+      pp site_context
       @top_level_pages.each do |page|
         page.create_context(site_context)
       end
@@ -37,6 +38,7 @@ module Evander
           temp_hash[page.title] = page
         end
       end
+      temp_hash["site"] = self
       ErbContext.new(temp_hash)
     end
 

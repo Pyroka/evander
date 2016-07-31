@@ -7,12 +7,14 @@ module Evander
 
   class Site
 
+    attr_reader :rss_url
+
     def initialize(root_dir)
       _parse_config(root_dir)
       @root_dir = root_dir
-      @top_level_pages = Page.get_sub_pages(root_dir)
+      @rss_url = ""
+      @top_level_pages = Page.get_sub_pages(self, root_dir)
       site_context = _create_site_context
-      pp site_context
       @top_level_pages.each do |page|
         page.create_context(site_context)
       end
@@ -44,7 +46,7 @@ module Evander
 
     def _render_page(page)
       html = page.render
-      File.write(page.filename + ".html", html)
+      File.write(page.relative_url, html)
       page.sub_pages.each do |subpage|
         if(!File.directory?(page.title))
           Dir.mkdir(page.title)

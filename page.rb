@@ -19,6 +19,7 @@ module Evander
     attr_reader :filename
     attr_reader :sub_pages
     attr_reader :markdown
+    attr_reader :should_render
 
     def initialize(site, path, parent=nil)
       dirname = File.dirname(path)
@@ -29,6 +30,7 @@ module Evander
       @description = ""
       @categories = []
       @order = 0
+      @should_render = true
       _parse_config(dirname)
       @keywords = @categories
       @filename = _get_filename()
@@ -84,6 +86,9 @@ module Evander
         end
         if(config.has_key?("categories"))
           @categories = config["categories"]
+        end
+        if(config.has_key?("render"))
+          @should_render = config["render"]
         end
       end
     end

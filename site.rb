@@ -32,6 +32,9 @@ module Evander
     end
 
     def _render_page(page)
+      if(!page.should_render)
+        return
+      end
       html = page.render
       page_dir = File.dirname(page.relative_url)
       if(!File.directory?(page_dir))

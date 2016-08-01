@@ -17,11 +17,11 @@ module Evander
     def initialize(site, path)
       dirname = File.dirname(path)
       @title = dirname
-      @date = DateTime.new
+      @date = Time.new
       @categories = []
       _parse_config(dirname)
-      @filename = @title.gsub(':', '-').gsub(' ', '-').downcase
-      @relative_url = @filename + ".html"
+      @filename = _get_filename()
+      @relative_url = @filename
       @url = site.url + "/" + @relative_url
       @sub_pages = Page.get_sub_pages(site, dirname)
       @markdown = File.open(path, "r").read
@@ -83,6 +83,14 @@ module Evander
           @categories = config["categories"]
         end
       end
+    end
+
+    def _get_filename()
+      page_filename = @title.gsub(':', '-').gsub(' ', '-').downcase + ".html"
+      if(@date != Time.new)
+        page_filename = @date.year.to_s + "/" + @date.month.to_s.rjust(2, "0") + "/" + @date.day.to_s.rjust(2, "0") + "/" + page_filename
+      end
+      page_filename
     end
 
     def _get_template()

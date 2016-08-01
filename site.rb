@@ -1,5 +1,7 @@
 require 'yaml'
+require 'fileutils'
 require 'pp'
+
 require File::expand_path('./page')
 require File::expand_path('./erb_context')
 
@@ -23,6 +25,8 @@ module Evander
     def render(root_dir)
       if(!File.directory?(root_dir))
         Dir.mkdir(root_dir)
+      else
+        FileUtils.rm_rf(Dir.glob(root_dir + "/*"))
       end
       Dir.chdir(root_dir) do
         @top_level_pages.each do |page|
@@ -46,6 +50,10 @@ module Evander
 
     def _render_page(page)
       html = page.render
+      page_dir = File.dirname(page.relative_url)
+      if(!File.directory?(page_dir))
+        FileUtils.mkdir_p(page_dir)
+      end
       File.write(page.relative_url, html)
       page.sub_pages.each do |subpage|
         if(!File.directory?(page.title))

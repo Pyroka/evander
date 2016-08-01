@@ -3,6 +3,7 @@ require 'fileutils'
 require 'pp'
 
 require File::expand_path('./page')
+require File::expand_path('./extensions')
 
 module Evander
 

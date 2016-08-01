@@ -12,6 +12,7 @@ module Evander
     attr_reader :relative_url
     attr_reader :title
     attr_reader :date
+    attr_reader :order
     attr_reader :description
     attr_reader :categories
     attr_reader :keywords
@@ -24,15 +25,18 @@ module Evander
       @site = site
       @parent = parent
       @title = dirname.capitalize
-      @date = Time.new
+      @date = nil
       @description = ""
       @categories = []
+      @order = 0
       _parse_config(dirname)
       @keywords = @categories
       @filename = _get_filename()
       @relative_url = @filename
       @url = site.url + "/" + relative_url
-      @sub_pages = Page.get_sub_pages(site, dirname, self)
+      @sub_pages = Page.get_sub_pages(site, dirname, self).sort do |left, right|
+        left.order - right.order
+      end
       @markdown = File.open(path, "r").read
     end
 
@@ -70,6 +74,13 @@ module Evander
         end
         if(config.has_key?("date"))
           @date = config["date"]
+          # Order by date if there is no order specified
+          if(!config.has_key?("order"))
+            @order = @date.usec
+          end
+        end
+        if(config.has_key?("order"))
+          @order = config["order"]
         end
         if(config.has_key?("categories"))
           @categories = config["categories"]
@@ -79,7 +90,7 @@ module Evander
 
     def _get_filename()
       page_filename = @title.gsub(/[^\w\d]/, '-').gsub(/-+/, '-').downcase + ".html"
-      if(@date != Time.new)
+      if(@date != nil)
         page_filename = @date.year.to_s + "/" + @date.month.to_s.rjust(2, "0") + "/" + @date.day.to_s.rjust(2, "0") + "/" + page_filename
       end
       if(@parent)

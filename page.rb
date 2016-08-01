@@ -1,45 +1,37 @@
 require 'date'
 require 'yaml'
 require 'kramdown'
+require 'erb'
 
 module Evander
 
   class Page
+    attr_reader :site
     attr_reader :url
     attr_reader :relative_url
     attr_reader :title
     attr_reader :date
+    attr_reader :description
     attr_reader :categories
+    attr_reader :keywords
     attr_reader :filename
     attr_reader :sub_pages
     attr_reader :markdown
 
     def initialize(site, path)
       dirname = File.dirname(path)
+      @site = site
       @title = dirname
       @date = Time.new
+      @description = ""
       @categories = []
       _parse_config(dirname)
+      @keywords = @categories
       @filename = _get_filename()
       @relative_url = @filename
       @url = site.url + "/" + @relative_url
       @sub_pages = Page.get_sub_pages(site, dirname)
       @markdown = File.open(path, "r").read
-    end
-
-    def create_context(parent_context)
-      @context = parent_context.clone
-      @context.url = @url
-      @context.title = @title
-      @context.date = @date
-      @context.categories = @categories
-      @context.keywords = @categories
-      @context.filename = @filename
-      @context.sub_pages = @sub_pages
-      @context.markdown = @markdown
-      @sub_pages.each do |page|
-        page.create_context(parent_context)
-      end
     end
 
     def self.get_sub_pages(site, dirname)
@@ -62,11 +54,11 @@ module Evander
     end
 
     def render
-      @context.render(_get_template)
+      ERB.new(_get_template).result(binding)
     end
 
     def render_content
-      Kramdown::Document.new(@context.render(@markdown), :auto_ids => false).to_html
+      Kramdown::Document.new(ERB.new(@markdown).result(binding), :auto_ids => false).to_html
     end
 
     def _parse_config(dirname)

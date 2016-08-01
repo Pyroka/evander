@@ -3,7 +3,6 @@ require 'fileutils'
 require 'pp'
 
 require File::expand_path('./page')
-require File::expand_path('./erb_context')
 
 module Evander
 
@@ -16,10 +15,6 @@ module Evander
       @root_dir = root_dir
       @rss_url = ""
       @top_level_pages = Page.get_sub_pages(self, root_dir)
-      site_context = _create_site_context
-      @top_level_pages.each do |page|
-        page.create_context(site_context)
-      end
     end
 
     def render(root_dir)
@@ -35,17 +30,6 @@ module Evander
           end
         end
       end
-    end
-
-    def _create_site_context
-      temp_hash = Hash.new
-      @top_level_pages.each do |page|
-        if(page.is_a?(Page))
-          temp_hash[page.title] = page
-        end
-      end
-      temp_hash["site"] = self
-      ErbContext.new(temp_hash)
     end
 
     def _render_page(page)

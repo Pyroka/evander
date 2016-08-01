@@ -47,8 +47,6 @@ module Evander
           index_path = File.join(child, "index.markdown")
           if(File.exist?(index_path))
             pages << Page.new(site, index_path, parent)
-          else
-            pages.push(*Page.get_sub_pages(site, child))
           end
         end
       end

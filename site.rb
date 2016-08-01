@@ -26,9 +26,7 @@ module Evander
       end
       Dir.chdir(root_dir) do
         @top_level_pages.each do |page|
-          if(page.is_a?(Page))
-            _render_page(page)
-          end
+          _render_page(page)
         end
       end
     end

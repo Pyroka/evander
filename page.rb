@@ -21,7 +21,7 @@ module Evander
     def initialize(site, path)
       dirname = File.dirname(path)
       @site = site
-      @title = dirname
+      @title = dirname.capitalize
       @date = Time.new
       @description = ""
       @categories = []

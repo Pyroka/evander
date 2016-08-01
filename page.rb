@@ -86,7 +86,7 @@ module Evander
     end
 
     def _get_filename()
-      page_filename = @title.gsub(':', '-').gsub(' ', '-').downcase + ".html"
+      page_filename = @title.gsub(/[^\w\d]/, '-').gsub(/-+/, '-').downcase + ".html"
       if(@date != Time.new)
         page_filename = @date.year.to_s + "/" + @date.month.to_s.rjust(2, "0") + "/" + @date.day.to_s.rjust(2, "0") + "/" + page_filename
       end

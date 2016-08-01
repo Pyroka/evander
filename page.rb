@@ -34,9 +34,7 @@ module Evander
       @filename = _get_filename()
       @relative_url = @filename
       @url = site.url + "/" + relative_url
-      @sub_pages = Page.get_sub_pages(site, dirname, self).sort do |left, right|
-        left.order - right.order
-      end
+      @sub_pages = Page.get_sub_pages(site, dirname, self)
       @markdown = File.open(path, "r").read
     end
 
@@ -54,7 +52,9 @@ module Evander
           end
         end
       end
-      pages
+      pages.sort do |left, right|
+        left.order - right.order
+      end
     end
 
     def render

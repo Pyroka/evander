@@ -41,12 +41,7 @@ module Evander
       end
       File.write(page.relative_url, html)
       page.sub_pages.each do |subpage|
-        if(!File.directory?(page.title))
-          Dir.mkdir(page.title)
-        end
-        Dir.chdir(page.title) do
-          _render_page(subpage)
-        end
+        _render_page(subpage)
       end
     end
 

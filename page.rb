@@ -7,6 +7,7 @@ module Evander
 
   class Page
     attr_reader :site
+    attr_reader :parent
     attr_reader :url
     attr_reader :relative_url
     attr_reader :title
@@ -18,9 +19,10 @@ module Evander
     attr_reader :sub_pages
     attr_reader :markdown
 
-    def initialize(site, path)
+    def initialize(site, path, parent=nil)
       dirname = File.dirname(path)
       @site = site
+      @parent = parent
       @title = dirname.capitalize
       @date = Time.new
       @description = ""
@@ -29,12 +31,12 @@ module Evander
       @keywords = @categories
       @filename = _get_filename()
       @relative_url = @filename
-      @url = site.url + "/" + @relative_url
-      @sub_pages = Page.get_sub_pages(site, dirname)
+      @url = site.url + "/" + relative_url
+      @sub_pages = Page.get_sub_pages(site, dirname, self)
       @markdown = File.open(path, "r").read
     end
 
-    def self.get_sub_pages(site, dirname)
+    def self.get_sub_pages(site, dirname, parent=nil)
       pages = []
       Dir.foreach(dirname) do |child|
         Dir.chdir(dirname) do
@@ -44,7 +46,7 @@ module Evander
 
           index_path = File.join(child, "index.markdown")
           if(File.exist?(index_path))
-            pages << Page.new(site, index_path)
+            pages << Page.new(site, index_path, parent)
           else
             pages.push(*Page.get_sub_pages(site, child))
           end
@@ -81,6 +83,9 @@ module Evander
       page_filename = @title.gsub(/[^\w\d]/, '-').gsub(/-+/, '-').downcase + ".html"
       if(@date != Time.new)
         page_filename = @date.year.to_s + "/" + @date.month.to_s.rjust(2, "0") + "/" + @date.day.to_s.rjust(2, "0") + "/" + page_filename
+      end
+      if(@parent)
+        page_filename = @parent.relative_url.sub('.html', '') + "/" + page_filename
       end
       page_filename
     end

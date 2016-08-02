@@ -1,21 +1,19 @@
 require 'yaml'
 require 'fileutils'
-require 'pp'
 
 require File::expand_path('./page')
 require File::expand_path('./extensions')
+require File::expand_path('./rss')
 
 module Evander
 
   class Site
 
-    attr_reader :rss_url
-
     def initialize(root_dir)
       _parse_config(root_dir)
       @root_dir = root_dir
-      @rss_url = ""
       @top_level_pages = Page.get_sub_pages(self, root_dir)
+      @rss = Rss.new(self, @top_level_pages)
     end
 
     def render(root_dir)
@@ -29,6 +27,7 @@ module Evander
           _render_page(page)
         end
       end
+      @rss.render(root_dir)
     end
 
     def _render_page(page)
@@ -54,6 +53,21 @@ module Evander
           instance_variable_set("@" + key, value)
           self.class.send(:attr_reader, key)
         end
+      end
+    end
+
+    def _get_pages_for_rss()
+      rss_pages = []
+      _get_pages_for_rss_recursive(@top_level_pages, rss_pages)
+      rss_pages
+    end
+
+    def _get_pages_for_rss_recursive(all_pages, pages_to_include)
+      all_pages.each do |page|
+        if(page.include_in_rss)
+          pages_to_include << page
+        end
+        _get_pages_for_rss_recursive(page.sub_pages, pages_to_include)
       end
     end
 

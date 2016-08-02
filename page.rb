@@ -20,6 +20,7 @@ module Evander
     attr_reader :sub_pages
     attr_reader :markdown
     attr_reader :should_render
+    attr_reader :include_in_rss
 
     def initialize(site, path, parent=nil)
       dirname = File.dirname(path)
@@ -31,6 +32,7 @@ module Evander
       @categories = []
       @order = 0
       @should_render = true
+      @include_in_rss = false;
       _parse_config(dirname)
       @keywords = @categories
       @filename = _get_filename()
@@ -89,6 +91,9 @@ module Evander
         end
         if(config.has_key?("render"))
           @should_render = config["render"]
+        end
+        if(config.has_key?("rss"))
+          @include_in_rss = config["rss"]
         end
       end
     end

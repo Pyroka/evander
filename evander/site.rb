@@ -1,9 +1,9 @@
 require 'yaml'
 require 'fileutils'
 
-require File::expand_path('./page')
-require File::expand_path('./extensions')
-require File::expand_path('./rss')
+require_relative './page'
+require_relative './extensions'
+require_relative './rss'
 
 module Evander
 

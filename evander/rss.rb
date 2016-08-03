@@ -1,4 +1,4 @@
-require File::expand_path('./site')
+require_relative './site'
 
 module Evander
 
@@ -11,7 +11,7 @@ module Evander
     def initialize(site, top_level_pages)
       @site = site
       @posts = _get_pages_for_rss(top_level_pages).sort { |left, right| right.date <=> left.date }
-      @last_update_time = DateTime.now
+      @last_update_time = DateTime.now 
     end
 
     def render(root_dir)
@@ -35,7 +35,7 @@ module Evander
     end
 
     def _get_template()
-      template_path = File::expand_path(File.dirname(__FILE__) + '/theme/_atom_template.xml')
+      template_path = File::expand_path(File.dirname(__FILE__) + '/../theme/_atom_template.xml')
       File.open(template_path).read
     end
 

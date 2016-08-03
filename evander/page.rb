@@ -110,7 +110,7 @@ module Evander
     end
 
     def _get_template()
-      template_path = File::expand_path(File.dirname(__FILE__) + '/theme/layouts/default.html')
+      template_path = File::expand_path(File.dirname(__FILE__) + '/../theme/layouts/default.html')
       File.open(template_path).read
     end
 

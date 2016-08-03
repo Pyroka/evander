@@ -1,9 +1,9 @@
 require 'webrick'
 require 'listen'
 
-require File::expand_path('./evander/generation/command_line_options')
-require File::expand_path('./evander/generation/watcher')
-require File::expand_path('./evander/site')
+require_relative './evander/generation/command_line_options'
+require_relative './evander/generation/watcher'
+require_relative './evander/site'
 
 module Evander
 

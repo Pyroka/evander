@@ -32,22 +32,23 @@ module Evander
       @source_listener = Listen.to(source_dir) do |modified, added, removed|
         _regenerate_site()
       end
+
+      @theme_listener = Listen.to(File::expand_path('./theme')) do |modified, added, removed|
+        _regenerate_site()
+      end
       
     end
 
     def start()
+      _regenerate_site()
       @source_listener.start
+      @theme_listener.start
       @server.start
     end
 
     def _regenerate_site()
-      begin
-          site = Site.new(@input_dir)
-          site.render(@output_dir)
-        rescue Exception => e  
-          puts e.message  
-          puts e.backtrace.inspect 
-        end
+      site = Site.new(@input_dir)
+      site.render(@output_dir)
     end
 
   end

@@ -9,6 +9,8 @@ module Evander
 
   class Site
 
+    attr_reader :top_level_pages
+
     def initialize(root_dir)
       _parse_config(root_dir)
       @root_dir = root_dir

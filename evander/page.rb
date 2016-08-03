@@ -11,6 +11,7 @@ module Evander
     attr_reader :url
     attr_reader :relative_url
     attr_reader :title
+    attr_reader :filename
     attr_reader :date
     attr_reader :order
     attr_reader :description

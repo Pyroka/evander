@@ -1,5 +1,7 @@
 *.gem
 *.rbc
+.sass-cache
+public/
 /.config
 /coverage/
 /InstalledFiles

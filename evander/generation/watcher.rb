@@ -49,6 +49,7 @@ module Evander
     def _regenerate_site()
       site = Site.new(@input_dir)
       site.render(@output_dir)
+      system("compass compile --sass-dir " + File::expand_path('./theme/layouts/default/stylesheets') + " --css-dir #{@output_dir}/stylesheets")
     end
 
   end

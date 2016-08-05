@@ -1,6 +1,8 @@
 require 'webrick'
 require 'listen'
 
+require_relative 'generator'
+
 module Evander
   
   class NonCachingFileHandler < WEBrick::HTTPServlet::FileHandler
@@ -20,7 +22,7 @@ module Evander
 
   class Watcher
 
-    def initialize(source_dir, output_dir, code_dir)
+    def initialize(source_dir, output_dir)
       @input_dir = source_dir
       @output_dir = output_dir
       @server = WEBrick::HTTPServer.new(:Port => 8000)
@@ -29,27 +31,23 @@ module Evander
         @server.shutdown 
       end
 
+      @generator = Generator.new(@input_dir, @output_dir)
+
       @source_listener = Listen.to(source_dir) do |modified, added, removed|
-        _regenerate_site()
+        @generator.generate()
       end
 
       @theme_listener = Listen.to(File::expand_path('./theme')) do |modified, added, removed|
-        _regenerate_site()
+        @generator.generate()
       end
       
     end
 
     def start()
-      _regenerate_site()
+      @generator.generate()
       @source_listener.start
       @theme_listener.start
       @server.start
-    end
-
-    def _regenerate_site()
-      site = Site.new(@input_dir)
-      site.render(@output_dir)
-      system("compass compile --sass-dir " + File::expand_path('./theme/layouts/default/stylesheets') + " --css-dir #{@output_dir}/stylesheets")
     end
 
   end

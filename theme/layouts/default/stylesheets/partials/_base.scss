@@ -1,15 +1,2 @@
 @import "compass";
 @import "../modules/all";
-
-body {
-  color: $main-text-colour;
-}
-
-a {
-  color: $main-text-colour;
-  text-decoration: none;
-
-  &:hover {
-    color: $hover-text-colour;
-  }
-}

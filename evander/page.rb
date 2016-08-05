@@ -24,22 +24,22 @@ module Evander
     attr_reader :include_in_rss
 
     def initialize(site, path, parent=nil)
-      dirname = File.dirname(path)
+      @page_dir = File.dirname(path)
       @site = site
       @parent = parent
-      @title = dirname.capitalize
+      @title = @page_dir.capitalize
       @date = nil
       @description = ""
       @categories = []
       @order = 0
       @should_render = true
       @include_in_rss = false;
-      _parse_config(dirname)
+      _parse_config(@page_dir)
       @keywords = @categories
       @filename = _get_filename()
       @relative_url = @filename
       @url = site.url + "/" + relative_url
-      @sub_pages = Page.get_sub_pages(site, dirname, self)
+      @sub_pages = Page.get_sub_pages(site, @page_dir, self)
       @markdown = File.open(path, "r").read
     end
 
@@ -71,6 +71,18 @@ module Evander
     end
 
     def link_to(path)
+      resolved_path = _get_page_full_dir() + '/' + path
+      if(path =~ /\.png|gif|jpg$/)
+        return 'images/' + resolved_path
+      end
+      resolved_path
+    end
+
+    def _get_page_full_dir()
+      if(@parent.nil?)
+        return @page_dir
+      end
+      return @parent._get_page_full_dir() + '/' + @page_dir
     end
 
     def _parse_config(dirname)

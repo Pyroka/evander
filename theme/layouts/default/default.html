@@ -23,35 +23,34 @@
   <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
 </head>
 <body>
-    <div id="wrapper">
-      <header>
-        <a href="/">
-          <img src="/images/anthor_logo.png">
-        </a>
-        <div id="main-navigation">
-          <ul>
-            <% for page in site.top_level_pages %>
-              <% if page.title == "Index" %>
-              <li><a href="/">About</a></li>
-              <% else %>
-              <li><a href="<%= page.relative_url %>"><%= page.title %> </a></li>
-              <% end %>
-            <% end %>
-          </ul>
-        </div>
-      </header>
-      <div id="content">
-        <%= render_content %>
-      </div>
-    </div>
-    <footer role="contentinfo"><span class="copyright">Copyright &copy; 2016 - Anthor Ltd</span>
-      <span class="social">
-        <ul>
-          <li><a href="mailto:andrew@anthor.co.uk"><i class="fa fa-envelope"></i>Email</a></li>
-          <li><a href="http://www.twitter.com/pyroka"><i class="fa fa-twitter"></i>Twitter</a></li>
-          <li><a href="https://github.com/Pyroka"><i class="fa fa-github"></i>GitHub</a></li>
-        </ul>
-      </span>
+  <header>
+    <a href="/">
+      <img src="/images/anthor_logo.png">
+    </a>
+    <nav>
+      <ul>
+      <% for page in site.top_level_pages %>
+        <% if page.title == "Index" %>
+          <li><a href="/">About</a></li>
+        <% else %>
+          <li><a href="<%= page.relative_url %>"><%= page.title %> </a></li>
+        <% end %>
+      <% end %>
+      </ul>
+    </nav>
+  </header>
+  <article>
+    <%= render_content %>
+  </article>
+  <footer>
+    <span class="copyright">Copyright &copy; 2016 - Anthor Ltd</span>
+    <span class="social">
+    <ul>
+      <li><a href="mailto:andrew@anthor.co.uk"><i class="fa fa-envelope"></i>Email</a></li>
+      <li><a href="http://www.twitter.com/pyroka"><i class="fa fa-twitter"></i>Twitter</a></li>
+      <li><a href="https://github.com/Pyroka"><i class="fa fa-github"></i>GitHub</a></li>
+    </ul>
+    </span>
   </footer>
 </body>
 </html>

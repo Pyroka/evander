@@ -1,6 +1,8 @@
 body {
   color: $main-text-colour;
   font-family: $main-font;
+  font-size: 1.15em;
+  line-height: 2em;
 }
 
 a {
@@ -10,4 +12,35 @@ a {
   &:hover {
     color: $hover-text-colour;
   }
+}
+
+.header {
+  color: $highlight-text-colour;
+  font-family: $standout-font;
+  font-weight: normal;
+}
+
+h1 {
+  @extend .header;
+  font-size: 2em;
+}
+h2 {
+  @extend .header;
+  font-size: 1.5em;
+}
+h3 {
+  @extend .header;
+  font-size: 1.17em;
+}
+h4 {
+  @extend .header;
+  font-size: 1.12em;
+}
+h5 {
+  @extend .header;
+  font-size: .83em;
+}
+h6 {
+  @extend .header;
+  font-size: .67em;
 }

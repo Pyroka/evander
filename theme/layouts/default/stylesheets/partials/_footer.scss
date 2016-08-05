@@ -1,22 +1,14 @@
 body > footer {
-  font-size: .8em;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: $footer-height;
+  width: 100%;
   background-color: $footer-background-colour;
-  position: relative;
-  padding-top: 0px;
-  padding-bottom: 0px;
-  margin-bottom: 0px;
-  z-index: 1;
-  p:last-child { margin-bottom: 0; }
 
   .copyright {
     width: 33%;
     display: inline-block;
-  }
-
-  .credit {
-    width: 33%;
-    display: inline-block;
-    text-align: right;
   }
 
   .social {
@@ -43,11 +35,6 @@ body > footer {
 
   @media screen and (max-width: 740px){
     .copyright {
-      display: block;
-      width: 100%;
-      text-align: center;
-    }
-    .credit {
       display: block;
       width: 100%;
       text-align: center;

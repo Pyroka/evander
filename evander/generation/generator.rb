@@ -1,3 +1,5 @@
+require 'FileUtils'
+
 require_relative '../site.rb'
 
 module Evander
@@ -12,7 +14,8 @@ module Evander
     def generate()
       site = Site.new(@input_dir)
       site.render(@output_dir)
-      system("compass compile --sass-dir " + File::expand_path('./theme/layouts/default/stylesheets') + " --css-dir #{@output_dir}/stylesheets")
+      system('compass compile --sass-dir ' + File::expand_path('./theme/layouts/default/stylesheets') + ' --css-dir ' + @output_dir + '/stylesheets')
+      FileUtils.cp_r('./theme/layouts/default/images', @output_dir + '/images')
     end
 
   end

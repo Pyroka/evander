@@ -1,14 +1,17 @@
 body > footer {
+  font-size: .8em;
   position: absolute;
   left: 0;
   bottom: 0;
   height: $footer-height;
+  line-height: $footer-height;
   width: 100%;
   background-color: $footer-background-colour;
 
   .copyright {
     width: 33%;
     display: inline-block;
+    margin-left: 30px;
   }
 
   .social {

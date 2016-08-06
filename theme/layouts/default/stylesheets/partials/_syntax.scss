@@ -1,0 +1,26 @@
+.highlight {
+  line-height: 1.45em;
+  font-size: 13px;
+  border: 1px solid #05232b !important;
+  font-family: Menlo,Monaco,"Andale Mono","lucida console","Courier New",monospace;
+  margin: 1em 0;
+
+  table td.code { 
+    width: 100%; 
+
+    pre {
+      margin-left: 10px;
+    }
+  }
+
+  .lineno {
+    color: #93a1a1;
+    text-align: right;
+    font-size: 13px;
+    line-height: 1.45em;
+    padding: .8em !important;
+    background: #073642;
+    border-right: 1px solid #00232c !important;
+  }
+  border: 1px solid #05232b !important;
+}

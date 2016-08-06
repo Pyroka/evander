@@ -15,6 +15,7 @@ GEM
     compass-import-once (1.0.5)
       sass (>= 3.2, < 3.5)
     ffi (1.9.6-x86-mingw32)
+    kramdown (1.11.1)
     listen (3.0.5)
       rb-fsevent (>= 0.9.3)
       rb-inotify (>= 0.9)
@@ -23,7 +24,7 @@ GEM
     rb-fsevent (0.9.4)
     rb-inotify (0.9.5)
       ffi (>= 0.5.0)
-    redcarpet (3.3.4)
+    rouge (1.7.7)
     sass (3.4.20)
     wdm (0.1.1)
 
@@ -32,9 +33,10 @@ PLATFORMS
 
 DEPENDENCIES
   compass
+  kramdown
   listen (~> 3.0)
   rake
-  redcarpet
+  rouge
   wdm (>= 0.1.0)
 
 BUNDLED WITH

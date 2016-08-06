@@ -49,7 +49,13 @@ module Evander
     end
 
     def render_content
-      Kramdown::Document.new(ERB.new(@markdown).result(binding), :auto_ids => false).to_html
+      Kramdown::Document.new(ERB.new(@markdown).result(binding), {
+        :auto_ids => false, 
+        :syntax_highlighter => 'rouge',
+        :syntax_highlighter_opts => {
+          :line_numbers => true
+        }
+      }).to_html
     end
 
     def link_to(path)

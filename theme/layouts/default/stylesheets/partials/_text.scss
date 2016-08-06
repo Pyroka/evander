@@ -22,25 +22,35 @@ a {
 
 h1 {
   @extend .header;
-  font-size: 2em;
+  font-size: 2em 0;
+  margin: 1em;
 }
 h2 {
   @extend .header;
   font-size: 1.5em;
+  margin: .7em 0;
 }
 h3 {
   @extend .header;
   font-size: 1.17em;
+  margin: .5em 0;
 }
 h4 {
   @extend .header;
   font-size: 1.12em;
+  margin: .4em 0;
 }
 h5 {
   @extend .header;
   font-size: .83em;
+  margin: .3em 0;
 }
 h6 {
   @extend .header;
   font-size: .67em;
+  margin: .2em 0;
+}
+
+p {
+  padding: 0 10px;
 }

@@ -1,6 +1,12 @@
 .blog-index {
   list-style: none;
+
   .date {
     float: right;
   }
+}
+
+.blog-img {
+  display: block;
+  margin: 1em auto;
 }

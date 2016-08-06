@@ -22,8 +22,8 @@ a {
 
 h1 {
   @extend .header;
-  font-size: 2em 0;
-  margin: 1em;
+  font-size: 2em;
+  margin: 1em 0;
 }
 h2 {
   @extend .header;

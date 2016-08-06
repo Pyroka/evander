@@ -24,3 +24,19 @@ ul {
   margin-left: 50px;
   list-style-type: square;
 }
+
+.in-post-table {
+  margin: 1em auto;
+}
+
+.in-post-table th, .in-post-table td {
+  border: 1px solid #264A53;
+}
+
+.in-post-table th, .in-post-table td {
+  padding: 5px 15px;
+}
+
+.in-post-table tbody {
+  background-color: #002B36;
+}

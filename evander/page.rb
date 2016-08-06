@@ -67,7 +67,7 @@ module Evander
 
       case full_path
       when /\.png|gif|jpg$/
-        'images/' + full_path
+        '/images' + full_path
       else
         @site.find_page(full_path).url
       end

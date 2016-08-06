@@ -4,6 +4,12 @@
   border: 1px solid #05232b !important;
   font-family: Menlo,Monaco,"Andale Mono","lucida console","Courier New",monospace;
   margin: 1em 0;
+  overflow-y: hidden;
+  overflow-x: auto;
+  border: 1px solid #05232b !important;
+
+  &::-webkit-scrollbar {  height: .7em; background: rgba(#fff, .15); }
+  &::-webkit-scrollbar-thumb:horizontal { background: rgba(#fff, .2);  -webkit-border-radius: 4px; border-radius: 4px }
 
   table td.code { 
     width: 100%; 
@@ -22,5 +28,22 @@
     background: #073642;
     border-right: 1px solid #00232c !important;
   }
+}
+
+code {
+  display: block;
+  background-color: #002b36;
+  line-height: 1.45em;
+  font-size: 13px;
   border: 1px solid #05232b !important;
+  font-family: Menlo,Monaco,"Andale Mono","lucida console","Courier New",monospace;
+  padding: .8em 1em;
+  margin: 1em 0;
+  overflow-y: hidden;
+  overflow-x: auto;
+  border: 1px solid #05232b !important;
+  color: #93a1a1;
+
+  &::-webkit-scrollbar {  height: .7em; background: rgba(#fff, .15); }
+  &::-webkit-scrollbar-thumb:horizontal { background: rgba(#fff, .2);  -webkit-border-radius: 4px; border-radius: 4px }
 }

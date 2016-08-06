@@ -1,3 +1,6 @@
-.blog-index .date {
-  float: right;
+.blog-index {
+  list-style: none;
+  .date {
+    float: right;
+  }
 }

@@ -14,8 +14,11 @@ module Evander
     def initialize(root_dir)
       _parse_config(root_dir)
       @root_dir = root_dir
-      @top_level_pages = Page.get_sub_pages(self, root_dir)
-      @rss = Rss.new(self, @top_level_pages)
+      @all_pages = []
+      @top_level_pages = []
+      _get_all_pages(root_dir)
+      @top_level_pages.sort!{ |left, right| left.order <=> right.order }
+      @rss = Rss.new(self, @all_pages)
     end
 
     def render(root_dir)
@@ -24,36 +27,47 @@ module Evander
       else
         FileUtils.rm_rf(Dir.glob(root_dir + "/*"))
       end
-      Dir.chdir(root_dir) do
-        @top_level_pages.each do |page|
-          _render_page(page)
-        end
+      @all_pages.each do | page |
+        _render_page(root_dir, page)
       end
       @rss.render(root_dir)
     end
 
-    def resolve_page_link(path)
-      page = @top_level_pages.select { |p| p.find_page_for_path(path.sub(/^\//, '')) }
-      if(page.nil?)
-        return nil
-      else
-        return page
+    def find_page(path)
+      @all_pages.select{ |page| page.path == path }.first
+    end
+
+    def _get_all_pages(root_dir)
+      all_page_paths = Dir.glob(root_dir + "/**/index.markdown").map{ |path| path.sub(root_dir, '')}
+      page_path_parts = all_page_paths.map{ |path| path.split('/') }.sort{ |left, right| left.length <=> right.length }
+      page_path_parts.each do |parts|
+        parent_page = nil
+        # Last part is the index.markdown, and we don't usually need that
+        path_parts = parts.take(parts.length - 1)
+        if(path_parts.length > 1)
+          parent_page = find_page(path_parts.take(path_parts.length - 1).join('/'))
+        end
+        page = Page.new(self, root_dir + parts.join('/'), path_parts.join('/'), parent_page)
+        if(parent_page.nil?)
+          @top_level_pages << page
+        else
+          parent_page.add_sub_page(page)
+        end
+        @all_pages << page
       end
     end
 
-    def _render_page(page)
+    def _render_page(root_dir, page)
       if(!page.should_render)
         return
       end
       html = page.render
-      page_dir = File.dirname(page.relative_url)
+      full_path = File.join(root_dir, page.url).sub(/\/{2,}/, '/')
+      page_dir = File.dirname(full_path)
       if(!File.directory?(page_dir))
         FileUtils.mkdir_p(page_dir)
       end
-      File.write(page.relative_url, html)
-      page.sub_pages.each do |subpage|
-        _render_page(subpage)
-      end
+      File.write(full_path, html)
     end
 
     def _parse_config(dirname)

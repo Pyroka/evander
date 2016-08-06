@@ -33,7 +33,7 @@
         <% if page.title == "Index" %>
           <li><a href="/">About</a></li>
         <% else %>
-          <li><a href="<%= page.relative_url %>"><%= page.title %> </a></li>
+          <li><a href="<%= page.url %>"><%= page.title %> </a></li>
         <% end %>
       <% end %>
       </ul>

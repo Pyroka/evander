@@ -8,58 +8,40 @@ module Evander
   class Page
     attr_reader :site
     attr_reader :parent
+    attr_reader :path
     attr_reader :url
-    attr_reader :relative_url
     attr_reader :title
-    attr_reader :filename
     attr_reader :date
     attr_reader :order
     attr_reader :description
     attr_reader :categories
     attr_reader :keywords
-    attr_reader :filename
     attr_reader :sub_pages
     attr_reader :markdown
     attr_reader :should_render
     attr_reader :include_in_rss
 
-    def initialize(site, path, parent=nil)
-      @page_dir = File.dirname(path)
+    def initialize(site, source_path, path, parent=nil)
       @site = site
       @parent = parent
-      @title = @page_dir.capitalize
+      @title = path.split('/')[-1].capitalize
       @date = nil
       @description = ""
       @categories = []
       @order = 0
       @should_render = true
       @include_in_rss = false;
-      _parse_config(@page_dir)
+      _parse_config(File.dirname(source_path))
       @keywords = @categories
-      @filename = _get_filename()
-      @relative_url = @filename
-      @url = site.url + "/" + relative_url
-      @sub_pages = Page.get_sub_pages(site, @page_dir, self)
-      @markdown = File.open(path, "r").read
+      @path = path
+      @url = _get_url()
+      @sub_pages = []
+      @markdown = File.open(source_path, "r").read
     end
 
-    def self.get_sub_pages(site, dirname, parent=nil)
-      pages = []
-      Dir.foreach(dirname) do |child|
-        Dir.chdir(dirname) do
-          if(child == "." || child == ".." || !File.directory?(child))
-            next
-          end
-
-          index_path = File.join(child, "index.markdown")
-          if(File.exist?(index_path))
-            pages << Page.new(site, index_path, parent)
-          end
-        end
-      end
-      pages.sort do |left, right|
-        left.order - right.order
-      end
+    def add_sub_page(page)
+      @sub_pages << page
+      @sub_pages.sort!{ |left, right| left.order <=> right.order }
     end
 
     def render
@@ -74,14 +56,14 @@ module Evander
       if(path.start_with?('/'))
         full_path = path
       else
-        full_path = _get_page_full_dir() + '/' + path
+        full_path = @path + '/' + path
       end
 
       case full_path
       when /\.png|gif|jpg$/
         'images/' + full_path
       else
-        @site.resolve_page_link(full_path)
+        @site.find_page(full_path).url
       end
     end
 
@@ -95,13 +77,6 @@ module Evander
       end
     end
 
-    def _get_page_full_dir()
-      if(@parent.nil?)
-        return @page_dir
-      end
-      return @parent._get_page_full_dir() + '/' + @page_dir
-    end
-
     def _parse_config(dirname)
       config_path = dirname + "/config.yaml";
       if(File.exist?(config_path))
@@ -113,7 +88,7 @@ module Evander
           @date = config["date"]
           # Order by date if there is no order specified
           if(!config.has_key?("order"))
-            @order = @date.usec
+            @order = @date.tv_sec
           end
         end
         if(config.has_key?("order"))
@@ -131,15 +106,14 @@ module Evander
       end
     end
 
-    def _get_filename()
-      page_filename = @title.gsub(/[^\w\d]/, '-').gsub(/-+/, '-').downcase + ".html"
+    def _get_url()
+      page_url = @title.gsub(/[^\w\d]/, '-').gsub(/-+/, '-').downcase + ".html"
       if(@date != nil)
-        page_filename = @date.year.to_s + "/" + @date.month.to_s.rjust(2, "0") + "/" + @date.day.to_s.rjust(2, "0") + "/" + page_filename
+        page_url = @date.year.to_s + "/" + @date.month.to_s.rjust(2, "0") + "/" + @date.day.to_s.rjust(2, "0") + "/" + page_url
       end
-      if(@parent)
-        page_filename = @parent.relative_url.sub('.html', '') + "/" + page_filename
-      end
-      page_filename
+      parts = @path.split('/')
+      parts[-1] = page_url
+      parts.join('/')
     end
 
     def _get_template()

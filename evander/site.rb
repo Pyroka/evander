@@ -32,6 +32,15 @@ module Evander
       @rss.render(root_dir)
     end
 
+    def resolve_page_link(path)
+      page = @top_level_pages.select { |p| p.find_page_for_path(path.sub(/^\//, '')) }
+      if(page.nil?)
+        return nil
+      else
+        return page
+      end
+    end
+
     def _render_page(page)
       if(!page.should_render)
         return

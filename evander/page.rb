@@ -71,11 +71,28 @@ module Evander
     end
 
     def link_to(path)
-      resolved_path = _get_page_full_dir() + '/' + path
-      if(path =~ /\.png|gif|jpg$/)
-        return 'images/' + resolved_path
+      if(path.start_with?('/'))
+        full_path = path
+      else
+        full_path = _get_page_full_dir() + '/' + path
       end
-      resolved_path
+
+      case full_path
+      when /\.png|gif|jpg$/
+        'images/' + full_path
+      else
+        @site.resolve_page_link(full_path)
+      end
+    end
+
+    def find_page_for_path(path)
+      parts = path.split('/')
+      if(parts.length > 1)
+        new_path = parts.drop(1).join('/')
+        return @sub_pages.select { |p| p.find_page_for_path(new_path) }.first()
+      elsif @page_dir == parts[0]
+        return self
+      end
     end
 
     def _get_page_full_dir()

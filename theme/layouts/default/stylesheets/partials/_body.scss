@@ -10,7 +10,7 @@ body {
 
   article {
     padding: 2em 0;
-    max-width: 1000px;
+    max-width: $content-width;
     margin: 0 auto;
   }
 }
@@ -39,4 +39,8 @@ ul {
 
 .in-post-table tbody {
   background-color: #002B36;
+}
+
+.clear {
+  clear: both;
 }

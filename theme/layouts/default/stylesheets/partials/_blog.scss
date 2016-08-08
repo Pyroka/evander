@@ -10,3 +10,16 @@
   display: block;
   margin: 1em auto;
 }
+
+.page-nav {
+  max-width: $content-width;
+  margin: 1em auto 3em auto;
+
+  .page-nav-prev {
+    float: left;
+  }
+
+  .page-nav-next {
+    float: right;
+  }
+}

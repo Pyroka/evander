@@ -1,0 +1,14 @@
+<%= include('parts/_header.html') %>
+<article>
+  <%= render_content %>
+</article>
+<div class="page-nav">
+<% if prev_page %>
+<span class="page-nav-prev"><a href="<%= prev_page.url %>">« <%= prev_page.title %></a></span>
+<% end %>
+<% if next_page %>
+<span class="page-nav-next"><a href="<%= next_page.url %>"><%= next_page.title %> »</a></span>
+<% end %>
+<div class="clear"></div>
+</div>
+<%= include('parts/_footer.html') %>

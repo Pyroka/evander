@@ -18,6 +18,10 @@ module Evander
       @top_level_pages = []
       _get_all_pages(root_dir)
       @top_level_pages.sort!{ |left, right| left.order <=> right.order }
+      @top_level_pages.each_index do |i|
+        @top_level_pages[i].prev_page = @top_level_pages[i - 1]
+        @top_level_pages[i].next_page = @top_level_pages[i + 1]
+      end
       @rss = Rss.new(self, @all_pages)
     end
 

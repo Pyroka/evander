@@ -1,0 +1,16 @@
+.project {
+  margin-bottom: 2em;
+
+  dl {
+    margin-bottom: 1em;
+  }
+
+  dt {
+    padding: 0 10px;
+    float: left;
+    clear: left;
+    color: $highlight-text-colour;
+    font-family: $standout-font;
+    font-size: 1.12em;
+  }
+}

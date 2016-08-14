@@ -2,8 +2,17 @@
   list-style: none;
 
   .date {
-    float: right;
+    @media screen and (min-width: 900px) {
+      float: right;
+    }
+    @media screen and (max-width: 900px) {
+      display: block;
+    }
   }
+}
+
+ul.blog-index {
+  margin-left: 0;
 }
 
 .blog-img {

@@ -22,11 +22,12 @@ header {
       vertical-align: top;
 
       li {
-        float: left;
+        @media screen and (min-width: 480px) {
+          float: left;
+        }
         margin: 0;
-        padding: 0 10px;
-        font-size: 25px;
-        width: 175px;
+        padding: 0 .7em;
+        font-size: 1.3em;
       }
     }
   }

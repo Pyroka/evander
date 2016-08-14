@@ -4,19 +4,16 @@ body > footer {
   left: 0;
   bottom: 0;
   height: $footer-height;
-  line-height: $footer-height;
+  line-height: $footer-height / 2;
   width: 100%;
   background-color: $footer-background-colour;
 
   .copyright {
-    width: 33%;
-    display: inline-block;
-    margin-left: 30px;
+    margin: 0 auto;
+    text-align: center;
   }
 
   .social {
-    width: 33%;
-    display: inline-block;
     margin: 0 auto;
     text-align: center;
 
@@ -33,25 +30,6 @@ body > footer {
           margin-right: 5px;
         }
       }
-    }
-  }
-
-  @media screen and (max-width: 740px){
-    .copyright {
-      display: block;
-      width: 100%;
-      text-align: center;
-    }
-    .social {
-      display: block;
-      width: 100%;
-      text-align: center;
-    }
-  }
-
-  @media screen and (max-width: 270px){
-    .social ul li {
-      display: block;
     }
   }
 }

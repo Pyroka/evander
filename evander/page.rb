@@ -55,11 +55,11 @@ module Evander
     end
 
     def render
-      ERB.new(_get_template).result(binding)
+      ERB.new(_get_template, nil, '>').result(binding)
     end
 
     def render_content
-      Kramdown::Document.new(ERB.new(@markdown).result(binding), {
+      Kramdown::Document.new(ERB.new(@markdown, nil, '>').result(binding), {
         :auto_ids => false, 
         :syntax_highlighter => 'rouge',
         :syntax_highlighter_opts => {

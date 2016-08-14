@@ -15,7 +15,7 @@ module Evander
     end
 
     def render(root_dir)
-      xml = ERB.new(_get_template()).result(binding)
+      xml = ERB.new(_get_template(), nil, '>').result(binding)
       File.write(root_dir + "/atom.xml", xml)
     end
 

@@ -2,6 +2,7 @@
 *.rbc
 .sass-cache
 public/
+source/
 /.config
 /coverage/
 /InstalledFiles

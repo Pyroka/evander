@@ -79,7 +79,12 @@ module Evander
       when /\.png|gif|jpg$/
         '/images' + full_path
       else
-        @site.find_page(full_path).url
+        page = @site.find_page(full_path)
+        if(page.nil?)
+          puts "ERROR: Could not find page at path: " + full_path
+          return nil
+        end
+        page.url
       end
     end
 

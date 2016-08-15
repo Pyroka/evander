@@ -12,6 +12,8 @@ source/
 /test/tmp/
 /test/version_tmp/
 /tmp/
+sync.txt
+upload.bat
 
 # Used by dotenv library to load environment variables.
 # .env
